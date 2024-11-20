@@ -1,9 +1,9 @@
 package com.aelio.shopease.services;
 
+import com.aelio.shopease.dtos.ProductDto;
 import com.aelio.shopease.entities.Product;
 import com.aelio.shopease.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class ProductServiceImpl implements ProductService{
     private ProductRepository productRepository;
 
     @Override
-    public Product addProduct(Product product) {
+    public Product addProduct(ProductDto product) {
         return null;
     }
 
@@ -23,5 +23,16 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return products;
+    }
+
+    private Product createProduct(ProductDto productDto) {
+        Product product = new Product();
+        product.setName(productDto.getName());
+        product.setDescription(productDto.getDescription());
+        product.setBrand(productDto.getBrand());
+        product.setNewArrival(productDto.isNewArrival());
+        product.setPrice(productDto.getPrice());
+
+        return product;
     }
 }
