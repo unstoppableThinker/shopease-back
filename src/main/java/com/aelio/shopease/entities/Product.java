@@ -1,5 +1,6 @@
 package com.aelio.shopease.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,6 +34,9 @@ public class Product {
     @Column(nullable = false)
     private String brand;
 
+    @Column
+    private Float rating;
+
     @Column(nullable = false)
     private boolean isNewArrival;
 
@@ -47,12 +51,14 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductVariant> productVariants;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
+    @JsonIgnore
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryType_id", nullable = false)
+    @JsonIgnore
     private CategoryType categoryType;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
