@@ -29,11 +29,11 @@ public class ProductController {
     public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false, name="categoryId", value="categoryId") UUID categoryId, @RequestParam(required = false, name="typeId", value="typeId") UUID typeId, @RequestParam(required = false) String slug) {
         List<ProductDto> productList = new ArrayList<>();
 
-        productList = productService.getAllProducts(categoryId, typeId);
-
-        if (StringUtils.isNoneBlank(slug)) {
+        if (StringUtils.isNotBlank(slug)) {
             ProductDto productDto = productService.getProductBySlug(slug);
             productList.add(productDto);
+        } else {
+            productList = productService.getAllProducts(categoryId, typeId);
         }
 
         return new ResponseEntity<>(productList, HttpStatus.OK);
